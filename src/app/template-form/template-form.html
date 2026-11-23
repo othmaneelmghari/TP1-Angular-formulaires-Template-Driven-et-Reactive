@@ -1,0 +1,70 @@
+<mat-card class="card">
+  <mat-card-title>Inscription - Template Driven</mat-card-title>
+
+  <mat-card-content>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+
+      <!-- Nom complet -->
+      <mat-form-field appearance="outline">
+        <mat-label>Nom Complet</mat-label>
+        <input matInput name="fullname" [(ngModel)]="user.fullname"
+               #fullname="ngModel" required minlength="3" />
+        @if (fullname.hasError('required')) {
+          <mat-error>Le nom complet est obligatoire.</mat-error>
+        } @else if (fullname.hasError('minlength')) {
+          <mat-error>Minimum 3 caractères.</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Âge -->
+      <mat-form-field appearance="outline">
+        <mat-label>Age</mat-label>
+        <input matInput type="number" name="age" [(ngModel)]="user.age"
+               #age="ngModel" required min="18" />
+        @if (age.hasError('required')) {
+          <mat-error>L'âge est obligatoire.</mat-error>
+        } @else if (age.hasError('min')) {
+          <mat-error>Vous devez avoir au moins 18 ans.</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Pays -->
+      <mat-form-field appearance="outline">
+        <mat-label>Pays</mat-label>
+        <mat-select name="country" [(ngModel)]="user.country"
+                    #country="ngModel" required>
+          @for (c of countries; track c.value) {
+            <mat-option [value]="c.value">{{ c.label }}</mat-option>
+          }
+        </mat-select>
+        @if (country.hasError('required')) {
+          <mat-error>Veuillez choisir un pays.</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="user.email"
+               #email="ngModel" required email />
+        @if (email.hasError('required')) {
+          <mat-error>L'email est obligatoire.</mat-error>
+        } @else if (email.hasError('email')) {
+          <mat-error>Format d'email invalide.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="f.invalid">
+          S'inscrire
+        </button>
+      </div>
+    </form>
+
+    @if (result) {
+      <div class="success">Inscription réussie !</div>
+      <pre class="success">{{ result | json }}</pre>
+    }
+  </mat-card-content>
+</mat-card>

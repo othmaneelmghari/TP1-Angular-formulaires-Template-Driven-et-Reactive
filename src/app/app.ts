@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { TemplateFormComponent } from './template-form/template-form';
+import { ReactiveFormComponent } from './reactive-form/reactive-form';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  imports: [TemplateFormComponent, ReactiveFormComponent],
+  template: `<app-template-form /><app-reactive-form />`,
 })
-export class App {
-  protected readonly title = signal('AngularTP1');
-}
+export class App {}
